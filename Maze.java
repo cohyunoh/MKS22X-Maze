@@ -2,7 +2,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 public class Maze{
-  char[][] maze;
+  private char[][] maze;
   private boolean animate;//false by default
 
    /*Constructor loads a maze text file, and sets animate to false by default.
@@ -18,6 +18,8 @@ public class Maze{
 
    public Maze(String filename) throws FileNotFoundException{
        //COMPLETE CONSTRUCTOR
+       readInMaze(filename);
+       animate = false;
    }
 
 
@@ -46,12 +48,14 @@ public class Maze{
      Note the helper function has the same name, but different parameters.
      Since the constructor exits when the file is not found or is missing an E or S, we can assume it exists.
    */
+   /*
    public int solve(){
            //find the location of the S.
            //erase the S
            //and start solving at the location of the s.
            //return solve(???,???);
    }
+   */
 
    /*
      Recursive Solve function:
@@ -80,10 +84,11 @@ public class Maze{
     Scanner inpt = new Scanner(fileIn);
     int len = 0;
     int wid = 0;
+    String oneLine = "";
     while(inpt.hasNextLine()){
       len ++;
+      oneLine = inpt.nextLine();
     }
-    String oneLine = inpt.nextLine();
     wid = oneLine.length();
     maze = new char[len][wid];
     inpt = new Scanner(fileIn);
