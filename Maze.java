@@ -22,7 +22,14 @@ public class Maze{
        animate = false;
    }
 
-
+   private boolean hasSAndE(){
+     boolan ans = false;
+     for(int r = 0; r < maze.length; r++){
+       for(int c = 0; c < maze[r].length; c++){
+         if()
+       }
+     }
+   }
    private void wait(int millis){
         try {
             Thread.sleep(millis);
@@ -48,6 +55,7 @@ public class Maze{
      Note the helper function has the same name, but different parameters.
      Since the constructor exits when the file is not found or is missing an E or S, we can assume it exists.
    */
+
    /*
    public int solve(){
            //find the location of the S.
