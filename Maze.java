@@ -5,6 +5,7 @@ public class Maze{
   private char[][] maze;
   private boolean animate;//false by default
   private int[] coordOfE;
+  private int[] currentCoord;
 
    /*Constructor loads a maze text file, and sets animate to false by default.
      1. The file contains a rectangular ascii maze, made with the following 4 characters:
@@ -115,8 +116,8 @@ public class Maze{
        //COMPLETE SOLVE
 
        for(int i = 0; i < 4; i++){
-         if (i == 0){
-
+         if(move(i, row, col)){
+           if(solve())
          }
        }
        return -1; //so it compiles
