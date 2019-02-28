@@ -22,10 +22,23 @@ public class Maze{
        animate = false;
    }
 
-   public boolean hasSAndE(){
+   private boolean setupCorrect(){
      String mazeString = toString();
-     return mazeString.contains("S") && mazeString.contains("E");
+     return mazeString.contains("S") && mazeString.contains("E") && (mazeString.indexOf("S") == mazeString.lastIndexOf("S")) && (mazeString.indexOf("E") == mazeString.lastIndexOf("E"));
    }
+
+   private int[] findS(){
+     int[] ans = new int[2];
+     for(int r = 0; r < maze.length; r++){
+       for(int c = 0; c < maze[0].length; c++){
+         if(maze[r][c] == 'S'){
+           ans[0] = r;
+           ans[1] = c;
+         }
+       }
+     }
+   }
+
    private void wait(int millis){
         try {
             Thread.sleep(millis);
@@ -112,7 +125,7 @@ public class Maze{
     for(int r = 0; r < maze.length; r++){
       String line = "";
       for(int c = 0; c < maze[r].length; c++){
-        line += maze[r][c] + " ";
+        line += maze[r][c];
       }
       line += "\n";
       ans += line;
