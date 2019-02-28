@@ -37,6 +37,7 @@ public class Maze{
          }
        }
      }
+     return ans;
    }
 
    private void wait(int millis){
