@@ -122,10 +122,36 @@ public class Maze{
        return -1; //so it compiles
   }
 
-   private boolean move(int i, int row, int col){
+   private boolean move(int i, int r, int c){
      String unmoveables = "@.#";
      if(i == 0){
-       if(maze[r - 1][c] ==)
+       if(unmoveables.contains(maze[r - 1][c] + "")){
+         return false;
+       }else{
+         maze[r - 1][c] = '@';
+         return true;
+       }
+     }else if(i == 1){
+       if(unmoveables.contains(maze[r + 1][c] + "")){
+         return false;
+       }else{
+         maze[r + 1][c] = '@';
+         return true;
+       }
+     }else if(i == 2){
+       if(unmoveables.contains(maze[r][c - 1] + "")){
+         return false;
+       }else{
+         maze[r][c - 1] = '@';
+         return true;
+       }
+     }else{
+       if(unmoveables.contains(maze[r][c + 1] + "")){
+         return false;
+       }else{
+         maze[r][c + 1] = '@';
+         return true;
+       }
      }
    }
 
