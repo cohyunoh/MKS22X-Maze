@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class Maze{
   private char[][] maze;
   private boolean animate;//false by default
+  private int[] coordOfE;
 
    /*Constructor loads a maze text file, and sets animate to false by default.
      1. The file contains a rectangular ascii maze, made with the following 4 characters:
@@ -20,6 +21,7 @@ public class Maze{
        //COMPLETE CONSTRUCTOR
        readInMaze(filename);
        animate = false;
+       coordOfE = findE();
    }
 
    public boolean setupCorrect(){
@@ -32,6 +34,19 @@ public class Maze{
      for(int r = 0; r < maze.length; r++){
        for(int c = 0; c < maze[0].length; c++){
          if(maze[r][c] == 'S'){
+           ans[0] = r;
+           ans[1] = c;
+         }
+       }
+     }
+     return ans;
+   }
+
+   private int[] findE(){
+     int[] ans = new int[2];
+     for(int r = 0; r < maze.length; r++){
+       for(int c = 0; c < maze[0].length; c++){
+         if(maze[r][c] == 'E'){
            ans[0] = r;
            ans[1] = c;
          }
@@ -98,7 +113,20 @@ public class Maze{
            wait(20);
        }
        //COMPLETE SOLVE
+
+       for(int i = 0; i < 4; i++){
+         if (i == 0){
+
+         }
+       }
        return -1; //so it compiles
+  }
+
+   private boolean move(int i, int row, int col){
+     String unmoveables = "@.#";
+     if(i == 0){
+       if(maze[r - 1][c] ==)
+     }
    }
 
   public void readInMaze(String filename) throws FileNotFoundException{
