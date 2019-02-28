@@ -22,13 +22,9 @@ public class Maze{
        animate = false;
    }
 
-   private boolean hasSAndE(){
-     boolan ans = false;
-     for(int r = 0; r < maze.length; r++){
-       for(int c = 0; c < maze[r].length; c++){
-         if()
-       }
-     }
+   public boolean hasSAndE(){
+     String mazeString = toString();
+     return mazeString.contains("S") && mazeString.contains("E");
    }
    private void wait(int millis){
         try {
@@ -42,6 +38,9 @@ public class Maze{
    public void setAnimate(boolean b){
        animate = b;
    }
+
+
+
 
 
    public void clearTerminal(){
