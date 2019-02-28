@@ -22,7 +22,7 @@ public class Maze{
        animate = false;
    }
 
-   private boolean setupCorrect(){
+   public boolean setupCorrect(){
      String mazeString = toString();
      return mazeString.contains("S") && mazeString.contains("E") && (mazeString.indexOf("S") == mazeString.lastIndexOf("S")) && (mazeString.indexOf("E") == mazeString.lastIndexOf("E"));
    }

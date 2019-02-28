@@ -6,7 +6,7 @@ public class driver{
     try{
       Maze maze = new Maze("Maze1.txt");
       System.out.println(maze);
-      System.out.println(maze.hasSAndE());
+      System.out.println(maze.setupCorrect());
     }catch(FileNotFoundException e){
       e.printStackTrace();
     }
