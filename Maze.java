@@ -6,6 +6,7 @@ public class Maze{
   private boolean animate;//false by default
   private int[] coordOfE;
   private int[] currentCoord;
+  private int[] moves = {-1,0,1,0,0,-1,0,1};
 
    /*Constructor loads a maze text file, and sets animate to false by default.
      1. The file contains a rectangular ascii maze, made with the following 4 characters:
@@ -92,7 +93,7 @@ public class Maze{
      //erase the S
      maze[rOfS][cOfS] = '@';
      //and start solving at the location of the s.
-     return solve(rOfS,cOfS);
+     return solve(rOfS,cOfS, 0);
    }
 
    /*
@@ -106,21 +107,27 @@ public class Maze{
        All visited spots that were not part of the solution are changed to '.'
        All visited spots that are part of the solution are changed to '@'
    */
-   private int solve(int row, int col){ //you can add more parameters since this is private
-       //automatic animation! You are welcome.
-       if(animate){
-           clearTerminal();
-           System.out.println(this);
-           wait(20);
-       }
-       //COMPLETE SOLVE
+   private int solve(int row, int col, int ans){ //you can add more parameters since this is private
+     //automatic animation! You are welcome.
+     if(animate){
+         clearTerminal();
+         System.out.println(this);
+         wait(20);
+     }
+     //COMPLETE SOLVE
 
-       for(int i = 0; i < 4; i++){
-         if(move(i, row, col)){
-           if(solve())
+     for(int i = 0; i < 4; i ++){
+       if(move(i, row, col)){
+         ans ++;
+         if(solve(row + moves[i * 2], col + moves[i * 2 + 1], ans) != 0){
+           ans = solve(row + moves[i * 2], col + moves[i * 2 + 1], ans);
+           return ans;
+         }else{
+           retract(i, row, col);
          }
        }
-       return -1; //so it compiles
+    }
+    return 0; //so it compiles
   }
 
    private boolean move(int i, int r, int c){
@@ -154,6 +161,27 @@ public class Maze{
          return true;
        }
      }
+   }
+
+   private boolean retract(int i, int r, int c){
+     String unmoveables = "@.#";
+     if(i == 0){
+       maze[r - 1][c] = '.';
+       return true;
+     }
+     if(i == 1){
+       maze[r + 1][c] = '.';
+       return true;
+     }
+     if(i == 2){
+       maze[r][c - 1] = '.';
+       return true;
+     }
+     if(i == 3){
+       maze[r][c + 1] = '.';
+       return true;
+     }
+     return false;
    }
 
   public void readInMaze(String filename) throws FileNotFoundException{
