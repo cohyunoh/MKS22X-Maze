@@ -115,7 +115,10 @@ public class Maze{
          wait(20);
      }
      //COMPLETE SOLVE
-
+     if(row ==  coordOfE[0] && col == coordOfE[1]){
+       ans += 1;
+       return ans;
+     }
      for(int i = 0; i < 4; i ++){
        if(move(i, row, col)){
          ans ++;
@@ -124,6 +127,7 @@ public class Maze{
            return ans;
          }else{
            retract(i, row, col);
+           ans --;
          }
        }
     }
