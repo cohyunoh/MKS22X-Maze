@@ -7,6 +7,8 @@ public class driver{
       Maze maze = new Maze("Maze1.txt");
       System.out.println(maze);
       System.out.println(maze.setupCorrect());
+      maze.setAnimate(true);
+      System.out.println(maze.solve());
     }catch(FileNotFoundException e){
       e.printStackTrace();
     }

@@ -109,83 +109,40 @@ public class Maze{
    */
    private int solve(int row, int col, int ans){ //you can add more parameters since this is private
      //automatic animation! You are welcome.
+     String unmoveables = "@.#";
      if(animate){
          clearTerminal();
          System.out.println(this);
          wait(20);
      }
      //COMPLETE SOLVE
-     if(row ==  coordOfE[0] && col == coordOfE[1]){
-       ans += 1;
+     if(row == coordOfE[0] && col == coordOfE[1]){
        return ans;
-     }
-     for(int i = 0; i < 4; i ++){
-       if(move(i, row, col)){
-         ans ++;
-         if(solve(row + moves[i * 2], col + moves[i * 2 + 1], ans) != 0){
-           ans = solve(row + moves[i * 2], col + moves[i * 2 + 1], ans);
-           return ans;
-         }else{
-           retract(i, row, col);
-           ans --;
-         }
-       }
-    }
-    return 0; //so it compiles
-  }
-
-   private boolean move(int i, int r, int c){
-     String unmoveables = "@.#";
-     if(i == 0){
-       if(unmoveables.contains(maze[r - 1][c] + "")){
-         return false;
-       }else{
-         maze[r - 1][c] = '@';
-         return true;
-       }
-     }else if(i == 1){
-       if(unmoveables.contains(maze[r + 1][c] + "")){
-         return false;
-       }else{
-         maze[r + 1][c] = '@';
-         return true;
-       }
-     }else if(i == 2){
-       if(unmoveables.contains(maze[r][c - 1] + "")){
-         return false;
-       }else{
-         maze[r][c - 1] = '@';
-         return true;
-       }
      }else{
-       if(unmoveables.contains(maze[r][c + 1] + "")){
-         return false;
-       }else{
-         maze[r][c + 1] = '@';
-         return true;
+       for(int i = 0; i <  8; i += 2){
+         int newR = row + moves[i];
+         int newC = col + moves[i + 1];
+         if(move(newR, newC)){
+           ans++;
+           if(solve(newR,newC,ans) )
+         }
        }
      }
    }
 
-   private boolean retract(int i, int r, int c){
+   private boolean move(int r, int c){
      String unmoveables = "@.#";
-     if(i == 0){
-       maze[r - 1][c] = '.';
+     if(unmoveables.contains(maze[r][c] + "")){
+       return false;
+     }else{
+       maze[r][c] = '@';
        return true;
      }
-     if(i == 1){
-       maze[r + 1][c] = '.';
-       return true;
-     }
-     if(i == 2){
-       maze[r][c - 1] = '.';
-       return true;
-     }
-     if(i == 3){
-       maze[r][c + 1] = '.';
-       return true;
-     }
-     return false;
+   }
+
+   private boolean retract(int r, int c){
+     maze[r][c] = '.';
+     return true;
    }
 
   public void readInMaze(String filename) throws FileNotFoundException{
