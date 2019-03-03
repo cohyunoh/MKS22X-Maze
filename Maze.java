@@ -23,7 +23,7 @@ public class Maze{
        //COMPLETE CONSTRUCTOR
        readInMaze(filename);
        animate = false;
-       coordOfE = findE();
+       findE();
    }
 
    public boolean setupCorrect(){
@@ -44,17 +44,19 @@ public class Maze{
      return ans;
    }
 
-   private int[] findE(){
+   public boolean findE(){
      int[] ans = new int[2];
      for(int r = 0; r < maze.length; r++){
        for(int c = 0; c < maze[0].length; c++){
          if(maze[r][c] == 'E'){
            ans[0] = r;
            ans[1] = c;
+           coordOfE = ans;
+           return true;
          }
        }
      }
-     return ans;
+     return false;
    }
 
    private void wait(int millis){
@@ -93,7 +95,7 @@ public class Maze{
      //erase the S
      maze[rOfS][cOfS] = '@';
      //and start solving at the location of the s.
-     return solve(rOfS,cOfS, 0);
+     return solve(rOfS,cOfS, -1);
    }
 
    /*
@@ -116,7 +118,7 @@ public class Maze{
          wait(20);
      }
      //COMPLETE SOLVE
-     if(solved(row,col)){
+     if(!findE()){
        ans ++;
        return ans;
      }else{
@@ -126,7 +128,8 @@ public class Maze{
          if(move(newR,newC)){
            ans ++;
            if(ans < solve(newR,newC, ans)){
-             return solve(newR,newC, ans);
+             ans = solve(newR,newC, ans);
+             return ans;
            }else{
              retract(newR,newC);
              ans --;
@@ -137,9 +140,6 @@ public class Maze{
      }
    }
 
-   private boolean solved(int row, int col){
-     return row == coordOfE[0] && col == coordOfE[1];
-   }
 
    private boolean move(int r, int c){
      String unmoveables = "@.#";
