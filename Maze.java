@@ -110,35 +110,33 @@ public class Maze{
        All visited spots that are part of the solution are changed to '@'
    */
    private int solve(int row, int col, int ans){ //you can add more parameters since this is private
-     int newR, newC;
      //automatic animation! You are welcome.
      if(animate){
          clearTerminal();
          System.out.println(this);
+         System.out.println(ans);
          wait(20);
      }
      //COMPLETE SOLVE
-     if(!findE()){
-       ans ++;
-       return ans;
-     }else{
-       for(int i = 0; i < 4; i++){
-         newR = row + moves[i * 2];
-         newC = col + moves[i*2 + 1];
-         if(move(newR,newC)){
-           ans ++;
-           if(ans < solve(newR,newC, ans)){
-             ans = solve(newR,newC, ans);
-             return ans;
-           }else{
-             retract(newR,newC);
-             ans --;
-           }
+     for (int i = 0; i < 4; i++){
+       int newR = moves[i*2];
+       int newC = moves[i*2 + 1];
+       if(newR == coordOfE[0] && newC == coordOfE[1]){
+         maze[newR][newC] = '@';
+         return ans + 1;
+       }else if(move(newR,newC)){
+         ans ++;
+         if(solve(newR,newC,ans) > ans){
+           return solve(newR,newC,ans);
+         }else{
+           retract(newR,newC);
+           ans --;
          }
        }
-       return ans;
      }
+     return ans;
    }
+
 
 
    private boolean move(int r, int c){
@@ -152,8 +150,11 @@ public class Maze{
    }
 
    private boolean retract(int r, int c){
-     maze[r][c] = '.';
-     return true;
+     if(maze[r][c] == '@'){
+       maze[r][c] = '.';
+      return true;
+     }
+     return false;
    }
 
   public void readInMaze(String filename) throws FileNotFoundException{
