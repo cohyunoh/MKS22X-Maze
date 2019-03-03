@@ -119,17 +119,19 @@ public class Maze{
      }
      //COMPLETE SOLVE
      for (int i = 0; i < 4; i++){
-       int newR = moves[i*2];
-       int newC = moves[i*2 + 1];
+       int newR = row + moves[i*2];
+       int newC = col + moves[i*2 + 1];
        if(newR == coordOfE[0] && newC == coordOfE[1]){
          maze[newR][newC] = '@';
          return ans + 1;
-       }else if(move(newR,newC)){
+       }else if(safe(newR,newC)){
+         maze[newR][newC] = '@';
          ans ++;
          if(solve(newR,newC,ans) > ans){
+           ans ++;
            return solve(newR,newC,ans);
          }else{
-           retract(newR,newC);
+           maze[newR][newC] = '.';
            ans --;
          }
        }
@@ -139,23 +141,15 @@ public class Maze{
 
 
 
-   private boolean move(int r, int c){
+   private boolean safe(int r, int c){
      String unmoveables = "@.#";
      if(unmoveables.contains(maze[r][c] + "")){
        return false;
      }else{
-       maze[r][c] = '@';
        return true;
      }
    }
 
-   private boolean retract(int r, int c){
-     if(maze[r][c] == '@'){
-       maze[r][c] = '.';
-      return true;
-     }
-     return false;
-   }
 
   public void readInMaze(String filename) throws FileNotFoundException{
     File fileIn = new File(filename);
