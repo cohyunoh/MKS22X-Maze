@@ -14,7 +14,7 @@ public class driver{
       }catch(FileNotFoundException e){
         System.out.println("Invalid filename: "+filename);
       }catch(IllegalStateException e){
-        System.out.println("The Maze is Not A GOOD SETUP");
+        System.out.println("The Maze is Unsolvable");
       }
   }
 }
