@@ -114,7 +114,7 @@ public class Maze{
      if(animate){
          clearTerminal();
          System.out.println(this);
-         System.out.println(ans);
+         //System.out.println(ans);
          wait(20);
      }
      //COMPLETE SOLVE
