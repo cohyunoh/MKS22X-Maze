@@ -118,21 +118,23 @@ public class Maze{
          wait(20);
      }
      //COMPLETE SOLVE
-     for (int i = 0; i < 4; i++){
+     for(int i = 0; i < 4; i++){
        int newR = row + moves[i*2];
-       int newC = col + moves[i*2 + 1];
-       if(newR == coordOfE[0] && newC == coordOfE[1]){
-         maze[newR][newC] = '@';
-         return ans + 1;
-       }else if(safe(newR,newC)){
-         maze[newR][newC] = '@';
-         ans ++;
-         if(solve(newR,newC,ans) > ans){
+       int newC = col + moves[i*2+1];
+       if(maze[newR][newC] == 'E'){
+         return ans + 2;
+       }else{
+         if(safe(newR,newC)){
+           maze[newR][newC] = '@';
            ans ++;
-           return solve(newR,newC,ans);
-         }else{
-           maze[newR][newC] = '.';
-           ans --;
+           int oldAns = ans;
+           ans = solve(newR,newC,ans);
+           if(oldAns == ans){
+             maze[newR][newC] = '.';
+             ans --;
+           }else{
+             return ans;
+           }
          }
        }
      }
