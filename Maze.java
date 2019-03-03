@@ -22,6 +22,9 @@ public class Maze{
    public Maze(String filename) throws FileNotFoundException{
        //COMPLETE CONSTRUCTOR
        readInMaze(filename);
+       if(!setupCorrect()){
+         throw new IllegalStateException("Maze is not solvable");
+       }
        animate = false;
        findE();
    }
