@@ -108,26 +108,37 @@ public class Maze{
        All visited spots that are part of the solution are changed to '@'
    */
    private int solve(int row, int col, int ans){ //you can add more parameters since this is private
+     int newR, newC;
      //automatic animation! You are welcome.
-     String unmoveables = "@.#";
      if(animate){
          clearTerminal();
          System.out.println(this);
          wait(20);
      }
      //COMPLETE SOLVE
-     if(row == coordOfE[0] && col == coordOfE[1]){
+     if(solved(row,col)){
+       ans ++;
        return ans;
      }else{
-       for(int i = 0; i <  8; i += 2){
-         int newR = row + moves[i];
-         int newC = col + moves[i + 1];
-         if(move(newR, newC)){
-           ans++;
-           if(solve(newR,newC,ans) )
+       for(int i = 0; i < 4; i++){
+         newR = row + moves[i * 2];
+         newC = col + moves[i*2 + 1];
+         if(move(newR,newC)){
+           ans ++;
+           if(ans < solve(newR,newC, ans)){
+             return solve(newR,newC, ans);
+           }else{
+             retract(newR,newC);
+             ans --;
+           }
          }
        }
+       return ans;
      }
+   }
+
+   private boolean solved(int row, int col){
+     return row == coordOfE[0] && col == coordOfE[1];
    }
 
    private boolean move(int r, int c){
